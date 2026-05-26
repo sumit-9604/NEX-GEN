@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import { fadeInUp, staggerContainer } from '@/utils/variants'
+import { fadeInUp, staggerContainer } from 'src/utils/variants'
 
 interface ActivityData {
   day: string

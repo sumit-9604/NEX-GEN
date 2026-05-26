@@ -2,13 +2,15 @@
 
 import { motion } from 'framer-motion'
 import * as Icons from 'lucide-react'
-import { scaleOnHover, springTransition } from '@/utils/variants'
+import { scaleOnHover, springTransition } from 'src/utils/variants' 
 import type { Course } from '@/types'
 
 const iconMap: Record<string, any> = {
   'code': Icons.Code2,
   'design': Icons.Palette,
   'data': Icons.BarChart3,
+  'cloud': Icons.Cloud,
+  'mobile': Icons.Smartphone,
   'default': Icons.BookOpen
 }
 
@@ -20,7 +22,7 @@ export function CourseCard({ course }: { course: Course }) {
       {...scaleOnHover}
       className="relative group rounded-2xl glass overflow-hidden cursor-pointer"
     >
-      
+      {/* Glow border on hover */}
       <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/0 via-purple-500/0 to-blue-500/0 group-hover:from-purple-500/20 group-hover:via-purple-500/10 group-hover:to-blue-500/20 transition-all duration-500" />
       
       <div className="relative p-6">
@@ -33,7 +35,7 @@ export function CourseCard({ course }: { course: Course }) {
         
         <h3 className="text-lg font-semibold mb-4">{course.title}</h3>
         
-        
+        {/* Animated Progress Bar */}
         <div className="relative h-1.5 bg-white/10 rounded-full overflow-hidden">
           <motion.div
             className="absolute inset-y-0 left-0 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"
@@ -43,7 +45,7 @@ export function CourseCard({ course }: { course: Course }) {
           />
         </div>
         
-        
+        {/* Mesh gradient overlay */}
         <div className="absolute inset-0 mesh-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
       </div>
     </motion.article>

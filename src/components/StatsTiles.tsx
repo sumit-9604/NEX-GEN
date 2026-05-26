@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Clock, Trophy, Target, Award } from 'lucide-react'
-import { fadeInUp } from '@/utils/variants'
+import { fadeInUp } from 'src/utils/variants'
 
 const stats = [
   { icon: Clock, label: 'Study Hours', value: '42', change: '+12%', color: 'purple' },

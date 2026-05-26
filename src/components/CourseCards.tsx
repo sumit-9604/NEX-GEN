@@ -1,29 +1,46 @@
 import { Suspense } from 'react'
-import { createClient } from '@/supabase/server'
+import { createClient } from 'src/supabase/server'
 import { CourseCard } from './CourseCard'
 import type { Course } from '@/types'
 
 async function getCourses(): Promise<Course[]> {
-  const supabase = createClient()
-  const { data, error } = await supabase
-    .from('courses')
-    .select('*')
-    .order('created_at', { ascending: false })
-  
-  if (error) {
-    throw new Error('Failed to fetch courses')
+  try {
+    const supabase = await createClient()
+    
+    const { data, error } = await supabase
+      .from('courses')
+      .select('*')
+      .order('created_at', { ascending: false })
+    
+    if (error) {
+      console.error('Supabase error:', error)
+      return []
+    }
+    
+    return data || []
+  } catch (err) {
+    console.error('Failed to fetch courses:', err)
+    return []
   }
-  
-  return data
 }
 
-function CourseGrid({ courses }: { courses: Course[] }) {
+async function CourseGrid() {
+  const courses = await getCourses()
+  
+  if (!courses || courses.length === 0) {
+    return (
+      <div className="text-center py-12 glass rounded-2xl">
+        <p className="text-gray-400">No courses yet. Add some courses to get started!</p>
+      </div>
+    )
+  }
+  
   return (
-    <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {courses.map((course) => (
         <CourseCard key={course.id} course={course} />
       ))}
-    </section>
+    </div>
   )
 }
 
@@ -42,11 +59,9 @@ function CourseSkeleton() {
 }
 
 export async function CourseCards() {
-  const courses = await getCourses()
-  
   return (
     <Suspense fallback={<CourseSkeleton />}>
-      <CourseGrid courses={courses} />
+      <CourseGrid />
     </Suspense>
   )
 }

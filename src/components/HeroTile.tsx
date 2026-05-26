@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Flame, Sparkles } from 'lucide-react'
-import { fadeInUp } from '@/lib/animations/variants'
+import { fadeInUp } from 'src/utils/variants'
 
 interface HeroTileProps {
   name: string

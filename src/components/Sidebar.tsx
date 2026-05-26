@@ -13,8 +13,8 @@ import {
   MessageSquare,
   HelpCircle
 } from 'lucide-react'
-import { cn } from '@/utils/cn'
-import { springTransition } from '@/utils/variants'
+import { cn } from 'src/utils/cn'
+import { springTransition } from 'src/utils/variants'
 
 const navItems = [
   { icon: LayoutDashboard, label: 'Dashboard', id: 'dashboard' },

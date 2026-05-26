@@ -1,10 +1,10 @@
 import { Suspense } from 'react'
-import { Sidebar } from '@/components/Sidebar'
-import { MobileNav } from '@/components/MobileNav'
-import { HeroTile } from '@/components/HeroTile'
-import { CourseCards } from '@/components/CourseCards'
-import { ActivityGraph } from '@/components/ActivityGraph'
-import { StatsTiles } from '@/components/StatsTiles'
+import { Sidebar } from 'src/components/Sidebar'
+import { MobileNav } from 'src/components/MobileNav'
+import { HeroTile } from 'src/components/HeroTile'
+import { CourseCards } from 'src/components/CourseCards'
+import { ActivityGraph } from 'src/components/ActivityGraph'
+import { StatsTiles } from 'src/components/StatsTiles'
 
 export default function DashboardPage() {
   return (

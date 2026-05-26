@@ -1,26 +1,45 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { cn } from '@/utils/cn'
+import { useEffect, useState } from 'react'
 
 interface AnimatedGridProps {
   className?: string
-  cellSize?: number
-  lineColor?: string
-  animated?: boolean
 }
 
-export function AnimatedGrid({ 
-  className, 
-  cellSize = 40, 
-  lineColor = 'rgba(255, 255, 255, 0.03)',
-  animated = true 
+export function AnimatedGrid({
+  className = '',
 }: AnimatedGridProps) {
+  const [size, setSize] = useState({
+    cols: 30,
+    rows: 20,
+  })
+
+  const cellSize = 60
+
+  useEffect(() => {
+    const update = () => {
+      setSize({
+        cols: Math.ceil(window.innerWidth / cellSize),
+        rows: Math.ceil(window.innerHeight / cellSize),
+      })
+    }
+
+    update()
+
+    window.addEventListener('resize', update)
+
+    return () => window.removeEventListener('resize', update)
+  }, [])
+
   return (
-    <div className={cn("absolute inset-0 overflow-hidden pointer-events-none", className)}>
-      <svg 
+    <div
+      className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}
+    >
+      <svg
         className="absolute inset-0 w-full h-full"
-        xmlns="http://www.w3.org/2000/svg"
+        width="100%"
+        height="100%"
       >
         <defs>
           <pattern
@@ -32,59 +51,35 @@ export function AnimatedGrid({
             <path
               d={`M ${cellSize} 0 L 0 0 0 ${cellSize}`}
               fill="none"
-              stroke={lineColor}
-              strokeWidth="0.5"
+              stroke="rgba(255,255,255,0.06)"
+              strokeWidth="1"
             />
           </pattern>
-          
-          {/* Glow filter for dots */}
-          <filter id="glow">
-            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-            <feMerge>
-              <feMergeNode in="coloredBlur"/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
         </defs>
-        
+
         <rect width="100%" height="100%" fill="url(#grid)" />
-        
-        
-        {animated && (
-          <motion.g
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-          >
-            {[...Array(20)].map((_, i) => (
-              [...Array(12)].map((_, j) => (
-                <motion.circle
-                  key={`${i}-${j}`}
-                  cx={i * cellSize}
-                  cy={j * cellSize}
-                  r="1.5"
-                  fill="rgba(139, 92, 246, 0.6)"
-                  filter="url(#glow)"
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ 
-                    scale: [0, 1, 0],
-                    opacity: [0, 1, 0]
-                  }}
-                  transition={{
-                    duration: 2,
-                    delay: (i + j) * 0.05,
-                    repeat: Infinity,
-                    repeatDelay: Math.random() * 2
-                  }}
-                />
-              ))
-            ))}
-          </motion.g>
+
+        {[...Array(size.cols)].map((_, i) =>
+          [...Array(size.rows)].map((_, j) => (
+            <motion.circle
+              key={`${i}-${j}`}
+              cx={i * cellSize}
+              cy={j * cellSize}
+              r="4"
+              fill="rgba(48,10,87,0.8)"
+              animate={{
+                opacity: [0.1, 1, 0.1],
+                scale: [1, 1.5, 1],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                delay: (i + j) * 0.05,
+              }}
+            />
+          ))
         )}
       </svg>
-      
-      
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/50 pointer-events-none" />
     </div>
   )
 }
