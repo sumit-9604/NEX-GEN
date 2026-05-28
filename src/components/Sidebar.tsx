@@ -1,137 +1,194 @@
 'use client'
-
+import '@/app/globals.css'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { 
-  LayoutDashboard, 
-  BookOpen, 
-  BarChart3, 
-  Settings, 
-  ChevronLeft,
-  GraduationCap,
-  Calendar,
-  MessageSquare,
-  HelpCircle
+import {
+  LayoutDashboard, BookOpen, BarChart3, Settings,
+  ChevronLeft, GraduationCap, Calendar, MessageSquare, HelpCircle,
 } from 'lucide-react'
-import { cn } from 'src/utils/cn'
-import { springTransition } from 'src/utils/variants'
+import { cn } from '@/src/utils/cn'
 
 const navItems = [
   { icon: LayoutDashboard, label: 'Dashboard', id: 'dashboard' },
-  { icon: BookOpen, label: 'Courses', id: 'courses' },
-  { icon: BarChart3, label: 'Analytics', id: 'analytics' },
-  { icon: Calendar, label: 'Schedule', id: 'schedule' },
-  { icon: MessageSquare, label: 'Messages', id: 'messages' },
-  { icon: HelpCircle, label: 'Help', id: 'help' },
-  { icon: Settings, label: 'Settings', id: 'settings' },
+  { icon: BookOpen,        label: 'Courses',   id: 'courses'   },
+  { icon: BarChart3,       label: 'Analytics', id: 'analytics' },
+  { icon: Calendar,        label: 'Schedule',  id: 'schedule'  },
+  { icon: MessageSquare,   label: 'Messages',  id: 'messages'  },
+  { icon: HelpCircle,      label: 'Help',      id: 'help'      },
+  { icon: Settings,        label: 'Settings',  id: 'settings'  },
 ]
+
+const spring = { type: 'spring', stiffness: 280, damping: 26 } as const
 
 export function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false)
-  const [activeItem, setActiveItem] = useState('dashboard')
+  const [activeItem,  setActiveItem]  = useState('dashboard')
 
   return (
+    
     <motion.aside
-      initial={{ width: isCollapsed ? 80 : 280 }}
-      animate={{ width: isCollapsed ? 80 : 280 }}
-      transition={springTransition}
+      initial={false}
+      animate={{display:"flex" , gap : "5px"}}
+      transition={spring}
       className={cn(
-        "relative h-screen glass border-r border-glass-border",
-        "hidden md:block"
+        'relative h-screen flex-shrink-0 overflow-hidden',
+        'hidden md:flex flex-col',
+        'bg-white/[0.03] backdrop-blur-xl',
+        'border-r border-white/[0.06]',
+        'z-40',
       )}
     >
-      <div className="flex flex-col h-full">
-        
-        <div className={cn(
-          "flex items-center h-16 px-4",
-          isCollapsed ? "justify-center" : "justify-between"
-        )}>
+      <div className="flex items-center gap-3 h-16 px-4 border-b border-white/[0.06] flex-shrink-0" 
+      >
+
+        <div className="flex-shrink-0 w-8 h-8 rounded-lg
+                        bg-gradient-to-br from-violet-500 to-indigo-600
+                        flex items-center justify-center
+                        shadow-lg shadow-violet-500/20" 
+                        >
+          <GraduationCap className="w-4 h-4 text-white" />
+        </div>
+
+
+        <AnimatePresence initial={false}>
           {!isCollapsed && (
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="flex items-center gap-2"
+            <motion.span
+              key="logo-text"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -10 }}
+              transition={{ duration: 0.15 }}
+              className="flex-1 font-semibold text-[15px] tracking-tight
+                         text-gradient-violet whitespace-nowrap"
             >
-              <GraduationCap className="w-6 h-6 text-purple-500" />
-              <span className="font-semibold text-lg bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
-                EduFlow
-              </span>
-            </motion.div>
+              NexLearn
+            </motion.span>
           )}
+        </AnimatePresence>
+
+
+        <motion.button
+          animate={{ marginLeft: isCollapsed ? 'auto' : 0, rotate: isCollapsed ? 180 : 0 }}
+          transition={spring}
+          onClick={() => setIsCollapsed(v => !v)}
           
-          <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className={cn(
-              "p-2 rounded-lg hover:bg-white/10 transition-colors",
-              isCollapsed && "rotate-180"
-            )}
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-        </div>
+          className="flex-shrink-0 flex items-center justify-center
+                     w-7 h-7 rounded-md
+                     text-white/30 hover:text-white/80 hover:bg-white/10
+                     transition-"
+        >
+          <ChevronLeft className="w-[15px] h-[15px]" />
+        </motion.button>
+      </div>
 
-        
-        <nav className="flex-1 py-6">
-          {navItems.map((item) => {
-            const Icon = item.icon
-            const isActive = activeItem === item.id
-            
-            return (
-              <motion.button
-                key={item.id}
-                onClick={() => setActiveItem(item.id)}
-                className={cn(
-                  "relative flex items-center w-full px-4 py-3 mb-2",
-                  "transition-colors hover:bg-white/5",
-                  isCollapsed ? "justify-center" : "gap-3"
-                )}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                transition={springTransition}
-              >
-                {isActive && (
-                  <motion.div
-                    layoutId="activeTab"
-                    className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-purple-500 to-blue-500 rounded-r"
-                    transition={springTransition}
-                  />
-                )}
-                <Icon className={cn(
-                  "w-5 h-5",
-                  isActive ? "text-purple-500" : "text-gray-400"
-                )} />
+      <div className='sideicons flex-1 mb-4' 
+      >
+      <nav>
+        {navItems.map((item) => {
+          const Icon     = item.icon
+          const isActive = activeItem === item.id
+
+          return (
+            <motion.button
+              key={item.id}
+              onClick={() => setActiveItem(item.id)}
+              whileHover={{ scale: 1.115 }}
+              whileTap={{ scale: 0.97 }}
+              transition={spring}
+              className={cn(
+                'relative flex items-center w-full h-10 rounded-lg',
+
+                isCollapsed ? 'justify-center px-0' : 'px-3 gap-3',
+
+                isActive
+                  ? 'bg-violet-500/10 text-white'
+                  : 'text-white/40 hover:bg-white/[0.04] hover:text-white/60',
+                'transition-colors duration-150',
+              )}
+            >
+
+              {isActive && (
+                <motion.span
+                  layoutId="sidebar-pill"
+                  transition={spring}
+                  className="absolute left-0 top-1/2 -translate-y-1/2
+                             w-[3px] h-[22px] rounded-r-full
+                             bg-gradient-to-b from-violet-400 to-indigo-500"
+                />
+              )}
+
+
+              <span className="flex-shrink-0 flex items-center justify-center w-5 h-5">
+                <Icon
+                  strokeWidth={isActive ? 2 : 1.75}
+                  className={cn(
+                    'w-[18px] h-[18px] transition-colors duration-150',
+                    isActive ? 'text-violet-400' : 'inherit',
+                  )}
+                />
+              </span>
+
+              <AnimatePresence initial={false}>
                 {!isCollapsed && (
-                  <span className={cn(
-                    "text-sm",
-                    isActive ? "text-white" : "text-gray-400"
-                  )}>
+                  <motion.span
+                    key={`label-${item.id}`}
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -8 }}
+                    transition={{ duration: 0.13 }}
+                    className="text-[13px] font-medium whitespace-nowrap"
+                  >
                     {item.label}
-                  </span>
+                  </motion.span>
                 )}
-              </motion.button>
-            )
-          })}
-        </nav>
+              </AnimatePresence>
+            </motion.button>
+          )
+        })}
+      </nav>
+      </div>
 
-        
-        <div className={cn(
-          "p-4 border-t border-glass-border",
-          isCollapsed && "flex justify-center"
+
+      <div className="flex-shrink-0 p-2 border-t border-white/[0.06]">
+        <button className={cn(
+          'flex items-center w-full rounded-lg p-2',
+          'hover:bg-white/[0.04] transition-colors',
+          isCollapsed ? 'justify-center' : 'gap-3',
         )}>
-          <div className={cn(
-            "flex items-center gap-3",
-            isCollapsed && "justify-center"
-          )}>
-            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-blue-500" />
-            {!isCollapsed && (
-              <div className="flex-1 text-left">
-                <p className="text-sm font-medium">Alex Morgan</p>
-                <p className="text-xs text-gray-400">Student</p>
-              </div>
-            )}
+
+
+          <div className="relative flex-shrink-0">
+            <div className="w-8 h-8 rounded-full
+                            bg-gradient-to-br from-violet-500 to-indigo-600
+                            flex items-center justify-center
+                            text-[11px] font-bold text-white select-none">
+              A
+            </div>
+            <span className="absolute -bottom-px -right-px
+                             w-[10px] h-[10px] rounded-full
+                             bg-emerald-400 border-2 border-[#050816]" />
           </div>
-        </div>
+
+          <AnimatePresence initial={false}>
+            {!isCollapsed && (
+              <motion.div
+                key="user-meta"
+                initial={{ opacity: 0, x: -8 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -8 }}
+                transition={{ duration: 0.13 }}
+                className="flex-1 min-w-0 text-left"
+              >
+                <p className="text-[13px] font-medium text-white/90 leading-tight truncate">
+                  Alex Morgan
+                </p>
+                <p className="text-[11px] text-white/35 leading-tight truncate mt-0.5">
+                  Student
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </button>
       </div>
     </motion.aside>
   )

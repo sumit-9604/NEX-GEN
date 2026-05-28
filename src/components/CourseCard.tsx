@@ -1,9 +1,8 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useMotionValue, useTransform } from 'framer-motion'
 import * as Icons from 'lucide-react'
-import { scaleOnHover, springTransition } from 'src/utils/variants' 
-import type { Course } from '@/types'
+import { useState } from 'react'
 
 const iconMap: Record<string, any> = {
   'code': Icons.Code2,
@@ -14,40 +13,120 @@ const iconMap: Record<string, any> = {
   'default': Icons.BookOpen
 }
 
-export function CourseCard({ course }: { course: Course }) {
+export function CourseCard({ course, index }: { course: any; index: number }) {
   const Icon = iconMap[course.icon_name] || iconMap.default
+  const [isHovered, setIsHovered] = useState(false)
   
+
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  const rotateX = useTransform(y, [-100, 100], [15, -15])
+  const rotateY = useTransform(x, [-100, 100], [-15, 15])
+
   return (
-    <motion.article
-      {...scaleOnHover}
-      className="relative group rounded-2xl glass overflow-hidden cursor-pointer"
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.1, type: "spring", stiffness: 100 }}
+      onMouseMove={(e) => {
+        const rect = e.currentTarget.getBoundingClientRect()
+        x.set(e.clientX - rect.left - rect.width / 2)
+        y.set(e.clientY - rect.top - rect.height / 2)
+      }}
+      onMouseLeave={() => {
+        x.set(0)
+        y.set(0)
+        setIsHovered(false)
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      className="relative rounded-2xl p-6 cursor-pointer transition-all duration-300"
+      style={{
+        background: 'rgba(255, 255, 255, 0.03)',
+        backdropFilter: 'blur(12px)',
+        border: `1px solid ${isHovered ? 'rgba(139, 92, 246, 0.5)' : 'rgba(255, 255, 255, 0.06)'}`,
+        boxShadow: isHovered ? '0 0 30px rgba(139, 92, 246, 0.3)' : 'none',
+        rotateX,
+        rotateY,
+        transformStyle: 'preserve-3d'
+      }}
     >
-      {/* Glow border on hover */}
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/0 via-purple-500/0 to-blue-500/0 group-hover:from-purple-500/20 group-hover:via-purple-500/10 group-hover:to-blue-500/20 transition-all duration-500" />
+      <motion.div
+        animate={{
+          background: isHovered 
+            ? ['linear-gradient(90deg, #8B5CF6, #3B82F6, #8B5CF6)', 
+               'linear-gradient(270deg, #8B5CF6, #3B82F6, #8B5CF6)']
+            : 'linear-gradient(90deg, transparent, transparent)'
+        }}
+        transition={{ duration: 2, repeat: Infinity }}
+        className="absolute inset-0 rounded-2xl pointer-events-none"
+        style={{ padding: '1px' }}
+      />
       
-      <div className="relative p-6">
+      <div className="relative z-10">
         <div className="flex items-start justify-between mb-4">
-          <div className="p-3 rounded-xl bg-gradient-to-br from-purple-500/20 to-blue-500/20">
+          <motion.div 
+            whileHover={{ rotate: 360, scale: 1.1 }}
+            transition={{ duration: 0.5 }}
+            className="p-3 rounded-xl"
+          >
             <Icon className="w-6 h-6 text-purple-400" />
-          </div>
-          <span className="text-sm text-gray-400">{course.progress}%</span>
+          </motion.div>
+          
+          <motion.div
+            animate={{ scale: isHovered ? 1.1 : 1 }}
+            className="text-sm font-semibold px-2 py-1 rounded-full"
+          >
+            {course.progress}%
+          </motion.div>
         </div>
         
-        <h3 className="text-lg font-semibold mb-4">{course.title}</h3>
+        <h3 className="text-lg font-semibold mb-4 text-white">{course.title}</h3>
         
         {/* Animated Progress Bar */}
-        <div className="relative h-1.5 bg-white/10 rounded-full overflow-hidden">
+        <div className="relative h-2 rounded-full overflow-hidden"
+             style={{ background: 'rgba(255, 255, 255, 0.1)' }}>
           <motion.div
-            className="absolute inset-y-0 left-0 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"
             initial={{ width: 0 }}
             animate={{ width: `${course.progress}%` }}
-            transition={{ duration: 1, delay: 0.5, ...springTransition }}
+            transition={{ duration: 1, delay: index * 0.1, type: "spring" }}
+            className="absolute inset-y-0 left-0 rounded-full"
+            style={{
+              background: 'linear-gradient(90deg, #8B5CF6, #3B82F6)',
+              boxShadow: '0 0 10px rgba(139, 92, 246, 0.5)'
+            }}
+          />
+          
+          <motion.div
+            animate={{ x: ['-100%', '100%'] }}
+            transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
           />
         </div>
         
-        {/* Mesh gradient overlay */}
-        <div className="absolute inset-0 mesh-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+        {isHovered && (
+          <>
+            {[...Array(6)].map((_, i) => (
+              <motion.div
+                key={i}
+                initial={{ scale: 0, x: 0, y: 0 }}
+                animate={{ 
+                  scale: [0, 1, 0],
+                  x: [0, (Math.random() - 0.5) * 100],
+                  y: [0, (Math.random() - 0.5) * 100],
+                }}
+                transition={{ duration: 1, repeat: Infinity, delay: i * 0.1 }}
+                className="absolute w-1 h-1 rounded-full"
+                style={{ 
+                  background: `rgba(139, 92, 246, ${0.5 + Math.random() * 0.5})`,
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`
+                }}
+              />
+            ))}
+          </>
+        )}
       </div>
-    </motion.article>
+    </motion.div>
   )
 }

@@ -2,39 +2,48 @@
 
 import { motion } from 'framer-motion'
 import { Clock, Trophy, Target, Award } from 'lucide-react'
-import { fadeInUp } from 'src/utils/variants'
 
 const stats = [
-  { icon: Clock, label: 'Study Hours', value: '42', change: '+12%', color: 'purple' },
-  { icon: Trophy, label: 'Completed', value: '8', change: '+2', color: 'blue' },
-  { icon: Target, label: 'Success Rate', value: '94%', change: '+5%', color: 'green' },
-  { icon: Award, label: 'Rank', value: '#147', change: '+23', color: 'orange' },
+  { icon: Clock,  value: '42',   label: 'Study Hours',  change: '+12%' },
+  { icon: Trophy, value: '8',    label: 'Completed',    change: '+2'   },
+  { icon: Target, value: '94%',  label: 'Success Rate', change: '+5%'  },
+  { icon: Award,  value: '#147', label: 'Rank',         change: '+23'  },
 ]
 
 export function StatsTiles() {
   return (
-    <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div className="flex flex-col gap-3 w-full">
       {stats.map((stat, i) => {
         const Icon = stat.icon
         return (
-          <motion.article
+          <motion.div
             key={stat.label}
-            variants={fadeInUp}
-            initial="initial"
-            animate="animate"
-            transition={{ delay: i * 0.05 }}
-            whileHover={{ y: -2 }}
-            className="rounded-2xl glass p-4"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: i * 0.08, type: 'spring', stiffness: 280, damping: 24 }}
+            whileHover={{ scale: 1.02 }}
+            className="flex items-center gap-3 w-full glass rounded-2xl"
+
+            style={{ padding: '20px 24px', minHeight: '80px' }}
           >
-            <div className="flex items-center justify-between mb-3">
-              <Icon className={`w-5 h-5 text-${stat.color}-400`} />
-              <span className="text-xs text-green-400">{stat.change}</span>
-            </div>
-            <p className="text-2xl font-bold">{stat.value}</p>
-            <p className="text-xs text-gray-400 mt-1">{stat.label}</p>
-          </motion.article>
+            <Icon className="flex-shrink-0 w-5 h-5 text-white/50" />
+
+            <span className="flex-shrink-0 w-16 text-xl font-bold text-white tracking-tight">
+              {stat.value}
+            </span>
+
+            <span className="flex-1 text-sm text-white/40 font-medium">
+              {stat.label}
+            </span>
+
+            <span className="flex-shrink-0 text-[11px] font-semibold
+                             text-emerald-400 bg-emerald-400/10
+                             px-2 py-0.5 rounded-full">
+              {stat.change}
+            </span>
+          </motion.div>
         )
       })}
-    </section>
+    </div>
   )
 }
