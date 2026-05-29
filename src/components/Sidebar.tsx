@@ -1,6 +1,7 @@
 'use client'
 import '@/app/globals.css'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   LayoutDashboard, BookOpen, BarChart3, Settings,
@@ -9,13 +10,48 @@ import {
 import { cn } from '@/src/utils/cn'
 
 const navItems = [
-  { icon: LayoutDashboard, label: 'Dashboard', id: 'dashboard' },
-  { icon: BookOpen,        label: 'Courses',   id: 'courses'   },
-  { icon: BarChart3,       label: 'Analytics', id: 'analytics' },
-  { icon: Calendar,        label: 'Schedule',  id: 'schedule'  },
-  { icon: MessageSquare,   label: 'Messages',  id: 'messages'  },
-  { icon: HelpCircle,      label: 'Help',      id: 'help'      },
-  { icon: Settings,        label: 'Settings',  id: 'settings'  },
+  {
+    icon: LayoutDashboard,
+    label: 'Dashboard',
+    id: 'dashboard',
+    href: '/',
+  },
+  {
+    icon: BookOpen,
+    label: 'Courses',
+    id: 'courses',
+    href: '/courses',
+  },
+  {
+    icon: BarChart3,
+    label: 'Analytics',
+    id: 'analytics',
+    href: '/analytics',
+  },
+  {
+    icon: Calendar,
+    label: 'Schedule',
+    id: 'schedule',
+    href: '/schedule',
+  },
+  {
+    icon: MessageSquare,
+    label: 'Messages',
+    id: 'messages',
+    href: '/messages',
+  },
+  {
+    icon: HelpCircle,
+    label: 'Help',
+    id: 'help',
+    href: '/help',
+  },
+  {
+    icon: Settings,
+    label: 'Settings',
+    id: 'settings',
+    href: '/settings',
+  },
 ]
 
 const spring = { type: 'spring', stiffness: 280, damping: 26 } as const
@@ -23,7 +59,7 @@ const spring = { type: 'spring', stiffness: 280, damping: 26 } as const
 export function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [activeItem,  setActiveItem]  = useState('dashboard')
-
+  const router = useRouter()
   return (
     
     <motion.aside
@@ -91,7 +127,10 @@ export function Sidebar() {
           return (
             <motion.button
               key={item.id}
-              onClick={() => setActiveItem(item.id)}
+              onClick={() => {
+  setActiveItem(item.id)
+  router.push(item.href)
+}}
               whileHover={{ scale: 1.115 }}
               whileTap={{ scale: 0.97 }}
               transition={spring}
