@@ -1,106 +1,158 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { Flame, Sparkles } from 'lucide-react'
-import { fadeInUp } from 'src/utils/variants'
-import CircularText from '@/src/components/CircularText'
+import { motion, useMotionValue, useMotionTemplate } from 'framer-motion'
+import { Flame, Sparkles, TrendingUp, BookOpen } from 'lucide-react'
+import { useRef, useCallback } from 'react'
+import CircularText from './CircularText'
 
-interface HeroTileProps {
-  name: string
-  streak: number
-}
+const spring = { type: 'spring', stiffness: 300, damping: 20 } as const
 
-export function HeroTile({ name, streak }: HeroTileProps) {
+export function HeroTile({ name, streak }: { name: string; streak: number }) {
+  const ref    = useRef<HTMLElement>(null)
+  const mouseX = useMotionValue(300)
+  const mouseY = useMotionValue(120)
+  const spotlight = useMotionTemplate`radial-gradient(
+    380px circle at ${mouseX}px ${mouseY}px,
+    rgba(139,92,246,0.12),
+    transparent 65%
+  )`
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    const rect = ref.current?.getBoundingClientRect()
+    if (!rect) return
+    mouseX.set(e.clientX - rect.left)
+    mouseY.set(e.clientY - rect.top)
+  }, [mouseX, mouseY])
+
+  const handleMouseLeave = useCallback(() => {
+    mouseX.set(300)
+    mouseY.set(120)
+  }, [mouseX, mouseY])
+
   return (
     <motion.article
-      variants={fadeInUp}
-      initial="initial"
-      animate="animate"
-      className="relative overflow-hidden rounded-2xl glass p-6 col-span-full md:col-span-2"
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.08, ...spring }}
+      className="relative overflow-hidden rounded-2xl glass p-8 min-h-[200px]"
     >
-      {/* Background effects */}
-      <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 via-blue-600/20 to-purple-600/20 animate-gradient" />
-      <div className="absolute inset-0 bg-gradient-radial from-white/5 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-700" />
 
-      <div className="relative z-10">
-        {/* Two column layout: Left for Circle, Right for Content */}
-        <div className="flex flex-col md:flex-row items-center gap-6">
-          
-          {/* LEFT COLUMN - Circular Text */}
-          <div className="flex-shrink-0">
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              className="w-32 h-32 md:w-40 md:h-40"
-            >
-              <CircularText 
-                text="NEXLEARN • FUTURISTIC • LEARNING • "
-                className="text-purple-400 text-xs md:text-sm font-bold"
-              />
-            </motion.div>
-          </div>
+      
 
-          {/* RIGHT COLUMN - Welcome Content + Streak */}
-          <div className="flex-1 w-full">
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-              
-              {/* Welcome Message */}
-              <div className="flex-1">
-                <motion.h1 
-                  className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent"
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.1 }}
-                >
-                  Welcome back, {name}
-                </motion.h1>
-                
-                <motion.p 
-                  className="text-gray-400 mt-2 text-sm md:text-base"
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                >
-                  Ready to continue your learning journey?
-                </motion.p>
-                
-                <motion.div 
-                  className="mt-3 flex items-center gap-2"
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.4 }}
-                >
-                  <Sparkles className="w-4 h-4 text-yellow-500 animate-pulse" />
-                  <span className="text-xs md:text-sm text-gray-300">
-                    Top 15% of learners this week!
-                  </span>
-                </motion.div>
-              </div>
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: spotlight }}
+      />
 
-              {/* Streak Badge - Right side of the right column */}
-              <motion.div 
-                className="flex-shrink-0"
-                initial={{ scale: 0, rotate: -180 }}
-                animate={{ scale: 1, rotate: 0 }}
-                transition={{ type: "spring", stiffness: 300, delay: 0.3 }}
-                whileHover={{ scale: 1.05 }}
-              >
-                <div className="flex flex-col items-center gap-1 px-5 py-3 rounded-2xl bg-gradient-to-br from-orange-500/20 to-red-500/20 border border-orange-500/30 backdrop-blur-sm">
-                  <motion.div
-                    animate={{ y: [0, -3, 0] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    <Flame className="w-6 h-6 text-orange-500" />
-                  </motion.div>
-                  <span className="text-orange-500 font-bold text-xl">{streak}</span>
-                  <span className="text-orange-500/80 text-xs">day streak</span>
-                </div>
-              </motion.div>
+      <div className="relative z-10 flex items-center justify-between gap-6">
 
-            </div>
-          </div>
+        <div className="flex-1 min-w-0">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.12, ...spring }}
+            className="flex items-center gap-2 mb-2"
+          >
+            <BookOpen className="w-3 h-3 text-violet-400/70" />
+            <span className="text-[10px] font-semibold text-violet-400/70 uppercase tracking-[0.18em]">
+              Dashboard
+            </span>
+          </motion.div>
 
+
+        <div>
+          <CircularText
+            text="NEXLEARN • EXPLORE • "
+            radius={40}            
+            spinDuration={22}
+            onHover="speedUp"
+            className="text-violet-300 font-semibold"
+          />
         </div>
+          <motion.h1
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.18, ...spring }}
+            className="text-[2rem] font-bold tracking-tight leading-tight mb-1.5"
+            style={{
+              background: 'linear-gradient(135deg, #ffffff 30%, rgba(167,139,250,0.9) 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}
+          >
+            Welcome back, {name} 👋
+          </motion.h1>
+
+
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.24, ...spring }}
+            className="text-white/40 text-sm mb-5"
+          >
+            Ready to continue your learning journey?
+          </motion.p>
+
+
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.32, ...spring }}
+            className="flex items-center gap-2 flex-wrap"
+          >
+
+            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full
+                            bg-amber-400/10 border border-amber-400/25">
+              <TrendingUp className="w-3 h-3 text-amber-400 flex-shrink-0" />
+              <span className="text-[11px] font-medium text-amber-300/90">
+                Top 15% this week
+              </span>
+              <Sparkles className="w-3 h-3 text-amber-400 animate-pulse flex-shrink-0" />
+            </div>
+
+            <span className="w-1 h-1 rounded-full bg-white/20" />
+
+
+            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full
+                            bg-violet-500/10 border border-violet-500/20">
+              <span className="text-[11px] font-medium text-violet-300">
+                ⚡ 24,850 XP
+              </span>
+            </div>
+          </motion.div>
+        </div>
+
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.65, y: 12 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ delay: 0.26, ...spring }}
+          whileHover={{ scale: 1.05 }}
+          className="flex-shrink-0 flex flex-col items-center gap-1.5
+                     px-6 py-5 rounded-2xl cursor-default
+                     border border-orange-500/30"
+          
+        >
+          <div style={{color: "#fb923c"}}>
+          <motion.div
+            animate={{ y: [0, -3, 0], scale: [1, 1.08, 1] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <Flame className="w-7 h-7 text-orange-400" />
+          </motion.div>
+          </div>
+          <span className="text-[2rem] font-black text-orange-400 leading-none tabular-nums">
+            {streak}
+          </span>
+          <span className="text-[9px] font-bold text-orange-400/55 uppercase tracking-[0.15em] leading-none">
+            day streak
+          </span>
+        </motion.div>
+
       </div>
     </motion.article>
   )

@@ -50,17 +50,7 @@ export function CourseCard({ course, index }: { course: any; index: number }) {
         transformStyle: 'preserve-3d'
       }}
     >
-      <motion.div
-        animate={{
-          background: isHovered 
-            ? ['linear-gradient(90deg, #8B5CF6, #3B82F6, #8B5CF6)', 
-               'linear-gradient(270deg, #8B5CF6, #3B82F6, #8B5CF6)']
-            : 'linear-gradient(90deg, transparent, transparent)'
-        }}
-        transition={{ duration: 2, repeat: Infinity }}
-        className="absolute inset-0 rounded-2xl pointer-events-none"
-        style={{ padding: '1px' }}
-      />
+      
       
       <div className="relative z-10">
         <div className="flex items-start justify-between mb-4">

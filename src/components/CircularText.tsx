@@ -1,120 +1,92 @@
-import React, { useEffect } from 'react';
-import { motion, useAnimation, useMotionValue, MotionValue, Transition } from 'motion/react';
+'use client'
 
-import './CircularText.css';
+import { motion, useAnimation, useMotionValue } from 'framer-motion'
+import { useEffect } from 'react'
+
 interface CircularTextProps {
-  text: string;
-  spinDuration?: number;
-  onHover?: 'slowDown' | 'speedUp' | 'pause' | 'goBonkers';
-  className?: string;
+  text: string
+  radius?: number        
+  spinDuration?: number
+  onHover?: 'slowDown' | 'speedUp' | 'pause' | 'goBonkers'
+  className?: string
 }
 
-const getRotationTransition = (duration: number, from: number, loop: boolean = true) => ({
-  from,
-  to: from + 360,
-  ease: 'linear' as const,
-  duration,
-  type: 'tween' as const,
-  repeat: loop ? Infinity : 0
-});
-
-const getTransition = (duration: number, from: number) => ({
-  rotate: getRotationTransition(duration, from),
-  scale: {
-    type: 'spring' as const,
-    damping: 20,
-    stiffness: 300
-  }
-});
-
-const CircularText: React.FC<CircularTextProps> = ({
+const CircularText = ({
   text,
+  radius = 40,         
   spinDuration = 20,
   onHover = 'speedUp',
-  className = ''
-}) => {
-  const letters = Array.from(text);
-  const controls = useAnimation();
-  const rotation: MotionValue<number> = useMotionValue(0);
+  className = '',
+}: CircularTextProps) => {
+  const letters  = Array.from(text)
+  const controls = useAnimation()
+  const rotation = useMotionValue(0)
 
   useEffect(() => {
-    const start = rotation.get();
     controls.start({
-      rotate: start + 360,
-      scale: 1,
-      transition: getTransition(spinDuration, start)
-    });
-  }, [spinDuration, text, onHover, controls]);
+      rotate: [0, 360],
+      transition: { duration: spinDuration, ease: 'linear', repeat: Infinity },
+    })
+  }, [spinDuration, controls])
 
   const handleHoverStart = () => {
-    const start = rotation.get();
-
-    if (!onHover) return;
-
-    let transitionConfig: ReturnType<typeof getTransition> | Transition;
-    let scaleVal = 1;
-
-    switch (onHover) {
-      case 'slowDown':
-        transitionConfig = getTransition(spinDuration * 2, start);
-        break;
-      case 'speedUp':
-        transitionConfig = getTransition(spinDuration / 4, start);
-        break;
-      case 'pause':
-        transitionConfig = {
-          rotate: { type: 'spring', damping: 20, stiffness: 300 },
-          scale: { type: 'spring', damping: 20, stiffness: 300 }
-        };
-        break;
-      case 'goBonkers':
-        transitionConfig = getTransition(spinDuration / 20, start);
-        scaleVal = 0.8;
-        break;
-      default:
-        transitionConfig = getTransition(spinDuration, start);
+    const map = {
+      slowDown:  spinDuration * 2.5,
+      speedUp:   spinDuration / 4,
+      pause:     9999,        
+      goBonkers: spinDuration / 18,
     }
-
     controls.start({
-      rotate: start + 360,
-      scale: scaleVal,
-      transition: transitionConfig
-    });
-  };
+      rotate: [0, 360],
+      transition: {
+        duration: map[onHover] ?? spinDuration,
+        ease: 'linear',
+        repeat: Infinity,
+      },
+    })
+  }
 
   const handleHoverEnd = () => {
-    const start = rotation.get();
     controls.start({
-      rotate: start + 360,
-      scale: 1,
-      transition: getTransition(spinDuration, start)
-    });
-  };
+      rotate: [0, 360],
+      transition: { duration: spinDuration, ease: 'linear', repeat: Infinity },
+    })
+  }
 
   return (
     <motion.div
-      className={`circular-text ${className}`}
-      style={{ rotate: rotation }}
-      initial={{ rotate: 0 }}
       animate={controls}
       onMouseEnter={handleHoverStart}
       onMouseLeave={handleHoverEnd}
+      style={{ width: radius * 2 + 16, height: radius * 2 + 16, position: 'relative' }}
     >
       {letters.map((letter, i) => {
-        const rotationDeg = (360 / letters.length) * i;
-        const factor = Math.PI / letters.length;
-        const x = factor * i;
-        const y = factor * i;
-        const transform = `rotateZ(${rotationDeg}deg) translate3d(${x}px, ${y}px, 0)`;
+        const angle  = (360 / letters.length) * i - 90   
+        const rad    = (angle * Math.PI) / 180
+        const x      = radius + radius * Math.cos(rad)    
+        const y      = radius + radius * Math.sin(rad)
 
         return (
-          <span key={i} style={{ transform, WebkitTransform: transform }}>
+          <span
+            key={i}
+            className={className}
+            style={{
+              position : 'absolute',
+              left     : x,
+              top      : y,
+
+              transform: `translate(-50%, -50%) rotate(${angle + 90}deg)`,
+              transformOrigin: '50% 50%',
+              display  : 'inline-block',
+              lineHeight: 1,
+            }}
+          >
             {letter}
           </span>
-        );
+        )
       })}
     </motion.div>
-  );
-};
+  )
+}
 
-export default CircularText;
+export default CircularText
