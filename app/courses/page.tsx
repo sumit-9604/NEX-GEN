@@ -1,5 +1,5 @@
 
-
+export const dynamic = 'force-dynamic'
 import { motion } from 'framer-motion'
 import { CourseCards } from 'src/components/CourseCards'
 
