@@ -1,47 +1,49 @@
-import { Suspense } from 'react'
-import { createClient } from 'src/supabase/server'
-import { CourseCard } from './CourseCard'
-import type { Course } from '@/types'
+import { Suspense } from "react";
+import { createClient } from "src/supabase/server";
+import { CourseCard } from "./CourseCard";
+import type { Course } from "@/types";
 
 async function getCourses(): Promise<Course[]> {
   try {
-    const supabase = await createClient()
-    
+    const supabase = await createClient();
+
     const { data, error } = await supabase
-      .from('courses')
-      .select('*')
-      .order('created_at', { ascending: false })
-    
+      .from("courses")
+      .select("*")
+      .order("created_at", { ascending: false });
+
     if (error) {
-      console.error('Supabase error:', error)
-      return []
+      console.error("Supabase error:", error);
+      return [];
     }
-    
-    return data || []
+
+    return data || [];
   } catch (err) {
-    console.error('Failed to fetch courses:', err)
-    return []
+    console.error("Failed to fetch courses:", err);
+    return [];
   }
 }
 
 async function CourseGrid() {
-  const courses = await getCourses()
-  
+  const courses = await getCourses();
+
   if (!courses || courses.length === 0) {
     return (
       <div className="text-center py-12 glass rounded-2xl">
-        <p className="text-gray-400">No courses yet. Add some courses to get started!</p>
+        <p className="text-gray-400">
+          No courses yet. Add some courses to get started!
+        </p>
       </div>
-    )
+    );
   }
-  
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {courses.map((course) => (
-        <CourseCard key={course.id} course={course} />
+      {courses.map((course, index) => (
+        <CourseCard key={course.id} course={course} index={index} />
       ))}
     </div>
-  )
+  );
 }
 
 function CourseSkeleton() {
@@ -55,7 +57,7 @@ function CourseSkeleton() {
         </div>
       ))}
     </div>
-  )
+  );
 }
 
 export async function CourseCards() {
@@ -63,5 +65,5 @@ export async function CourseCards() {
     <Suspense fallback={<CourseSkeleton />}>
       <CourseGrid />
     </Suspense>
-  )
+  );
 }
