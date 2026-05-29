@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { createClient } from "src/supabase/server";
+import { createClient } from "@/src/supabase/server";
 import { CourseCard } from "./CourseCard";
 import type { Course } from "@/types";
 
