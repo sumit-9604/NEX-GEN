@@ -95,5 +95,4 @@ app/
 ---
 
 ## Deployment
-
-Deployed on Vercel. Environment variables (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`) must be set in Vercel project settings under **Settings → Environment Variables**.
+LINK = https://nex-gen-hazel.vercel.app/
