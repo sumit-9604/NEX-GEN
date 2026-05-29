@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic'
 import { Sidebar }        from '@/src/components/Sidebar'
 import { MobileNav }      from '@/src/components/MobileNav'
 import { HeroTile }       from '@/src/components/HeroTile'
