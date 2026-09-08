@@ -35,15 +35,15 @@ export function Sidebar() {
       className={cn(
         'relative h-screen flex-shrink-0 overflow-hidden',
         'hidden md:flex flex-col',
-        'bg-slate-950/70 backdrop-blur-xl',
-        'border-r border-white/[0.08]',
+        'bg-[#FAF8F5]',
+        'border-r border-[#E5E2D9]',
         'z-40',
       )}
     >
       {/* Brand Header */}
-      <div className="flex items-center gap-3 h-16 px-4 border-b border-white/[0.08] flex-shrink-0">
-        <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center shadow-lg shadow-blue-500/25">
-          <GraduationCap className="w-5 h-5 text-white" />
+      <div className="flex items-center gap-3 h-16 px-4 border-b border-[#E5E2D9] flex-shrink-0">
+        <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-[#1B3B2B] flex items-center justify-center text-[#FAF8F5]">
+          <GraduationCap className="w-5 h-5 text-[#FAF8F5]" />
         </div>
 
         <AnimatePresence initial={false}>
@@ -54,7 +54,7 @@ export function Sidebar() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -10 }}
               transition={{ duration: 0.15 }}
-              className="flex-1 font-bold text-base tracking-tight text-gradient-blue whitespace-nowrap"
+              className="flex-1 font-serif font-bold text-lg tracking-tight text-[#1B3B2B] whitespace-nowrap"
             >
               NexLearn
             </motion.span>
@@ -65,7 +65,8 @@ export function Sidebar() {
           animate={{ rotate: isCollapsed ? 180 : 0 }}
           transition={spring}
           onClick={() => setIsCollapsed(v => !v)}
-          className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-lg text-white/40 hover:text-white hover:bg-white/10 transition-colors ml-auto"
+          className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-md text-[#5C6058] hover:text-[#1C1D1B] hover:bg-[#EBF0EC] transition-colors ml-auto"
+          aria-label="Toggle Navigation Sidebar"
         >
           <ChevronLeft className="w-4 h-4" />
         </motion.button>
@@ -81,21 +82,21 @@ export function Sidebar() {
             <motion.button
               key={item.id}
               onClick={() => router.push(item.href)}
-              whileHover={{ x: isCollapsed ? 0 : 3 }}
+              whileHover={{ x: isCollapsed ? 0 : 2 }}
               whileTap={{ scale: 0.98 }}
               className={cn(
-                'relative flex items-center w-full h-11 rounded-xl transition-all duration-150',
+                'relative flex items-center w-full h-11 rounded-lg transition-all duration-150',
                 isCollapsed ? 'justify-center px-0' : 'px-3.5 gap-3.5',
                 isActive
-                  ? 'bg-blue-500/15 text-white font-semibold border border-blue-500/30 shadow-lg shadow-blue-500/10'
-                  : 'text-white/50 hover:bg-white/[0.05] hover:text-white/90 border border-transparent',
+                  ? 'bg-[#EBF0EC] text-[#1B3B2B] font-semibold border border-[#D9E3DC]'
+                  : 'text-[#5C6058] hover:bg-[#EFECE3]/60 hover:text-[#1C1D1B] border border-transparent',
               )}
             >
               {isActive && (
                 <motion.span
                   layoutId="sidebar-active-pill"
                   transition={spring}
-                  className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 rounded-r-full bg-gradient-to-b from-sky-400 to-blue-600 shadow-md shadow-blue-500/50"
+                  className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 rounded-r-md bg-[#C85A32]"
                 />
               )}
 
@@ -104,7 +105,7 @@ export function Sidebar() {
                   strokeWidth={isActive ? 2.2 : 1.8}
                   className={cn(
                     'w-5 h-5 transition-colors',
-                    isActive ? 'text-blue-400' : 'text-white/50 group-hover:text-white',
+                    isActive ? 'text-[#1B3B2B]' : 'text-[#5C6058] group-hover:text-[#1C1D1B]',
                   )}
                 />
               </span>
@@ -129,18 +130,18 @@ export function Sidebar() {
       </div>
 
       {/* User Footer */}
-      <div className="flex-shrink-0 p-3 border-t border-white/[0.08]">
+      <div className="flex-shrink-0 p-3 border-t border-[#E5E2D9]">
         <div className={cn(
-          'flex items-center w-full rounded-xl p-2 bg-white/[0.02] border border-white/[0.05]',
+          'flex items-center w-full rounded-lg p-2 bg-white border border-[#E5E2D9]',
           isCollapsed ? 'justify-center' : 'gap-3',
         )}>
           <div className="relative flex-shrink-0">
             <img
               src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=120"
               alt="Alex Morgan"
-              className="w-8 h-8 rounded-full object-cover border border-blue-500/40"
+              className="w-8 h-8 rounded-full object-cover border border-[#1B3B2B]/20"
             />
-            <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-[#070b14]" />
+            <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-[#1B3B2B] border-2 border-white" />
           </div>
 
           <AnimatePresence initial={false}>
@@ -153,11 +154,11 @@ export function Sidebar() {
                 transition={{ duration: 0.13 }}
                 className="flex-1 min-w-0 text-left"
               >
-                <p className="text-xs font-bold text-white leading-tight truncate">
+                <p className="text-xs font-bold text-[#1C1D1B] leading-tight truncate">
                   Alex Morgan
                 </p>
-                <p className="text-[10px] text-sky-300 font-medium leading-tight truncate mt-0.5">
-                  Elite Scholar
+                <p className="text-[11px] text-[#C85A32] font-semibold leading-tight truncate mt-0.5">
+                  Academic Scholar
                 </p>
               </motion.div>
             )}

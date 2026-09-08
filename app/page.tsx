@@ -16,9 +16,10 @@ export default function DashboardPage() {
         <MobileNav />
 
         <main className="flex-1 overflow-y-auto">
-          <div className="max-w-7xl mx-auto p-4 md:p-6 pb-24 md:pb-6 space-y-6">
+          <div className="max-w-7xl mx-auto p-4 md:p-6 pb-20 md:pb-6 space-y-4">
             <StaggerWrapper>
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 mb-6">
+              {/* Top Hero & Stats Section */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-5 mb-4">
                 <div className="col-span-1 lg:col-span-2">
                   <HeroTile name="Alex" streak={7} />
                 </div>
@@ -27,18 +28,20 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              <section className="mb-6">
-                <div className="flex items-center justify-between mb-4">
+              {/* Continue Learning Section */}
+              <section className="mb-4">
+                <div className="flex items-center justify-between mb-3">
                   <h2 className="font-serif text-xl font-bold text-[#1C1D1B]">
                     Continue Learning
                   </h2>
-                  <span className="text-xs font-mono font-semibold text-[#1B3B2B]">
+                  <span className="font-sans text-xs font-semibold text-[#1B3B2B]">
                     12 Active Courses
                   </span>
                 </div>
                 <CourseCards />
               </section>
 
+              {/* Activity Analysis */}
               <ActivityGraph />
             </StaggerWrapper>
           </div>
