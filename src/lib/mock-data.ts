@@ -18,7 +18,14 @@ export const MOCK_COURSES: Course[] = [
     duration: "14h 20m",
     level: "Advanced",
     rating: 4.9,
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    lessons: [
+      { id: "l1", title: "1. Next.js 15 App Router Architecture", course_id: "course-1", completed: true, duration: "25m", order: 1 },
+      { id: "l2", title: "2. React Server Components & Streaming", course_id: "course-1", completed: true, duration: "35m", order: 2 },
+      { id: "l3", title: "3. Server Actions & Mutations", course_id: "course-1", completed: true, duration: "40m", order: 3 },
+      { id: "l4", title: "4. Custom Suspense & Skeleton Boundaries", course_id: "course-1", completed: false, duration: "30m", order: 4 },
+      { id: "l5", title: "5. Production Optimization & Deployment", course_id: "course-1", completed: false, duration: "45m", order: 5 },
+    ]
   },
   {
     id: "course-2",
@@ -37,7 +44,13 @@ export const MOCK_COURSES: Course[] = [
     duration: "8h 45m",
     level: "Intermediate",
     rating: 4.8,
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    lessons: [
+      { id: "l2-1", title: "1. Modern Color Tokens & Dark Themes", course_id: "course-2", completed: true, duration: "20m", order: 1 },
+      { id: "l2-2", title: "2. Glassmorphism CSS Backdrop Filters", course_id: "course-2", completed: true, duration: "30m", order: 2 },
+      { id: "l2-3", title: "3. Micro-interactions with Framer Motion", course_id: "course-2", completed: false, duration: "35m", order: 3 },
+      { id: "l2-4", title: "4. Responsive Layout Grids & Bento Boxes", course_id: "course-2", completed: false, duration: "25m", order: 4 },
+    ]
   },
   {
     id: "course-3",
@@ -56,7 +69,13 @@ export const MOCK_COURSES: Course[] = [
     duration: "12h 10m",
     level: "Advanced",
     rating: 4.95,
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    lessons: [
+      { id: "l3-1", title: "1. Database Schemas & Normalization", course_id: "course-3", completed: true, duration: "30m", order: 1 },
+      { id: "l3-2", title: "2. PostgreSQL B-Tree & GIN Indexing", course_id: "course-3", completed: true, duration: "45m", order: 2 },
+      { id: "l3-3", title: "3. Real-Time Streaming Data Pipelines", course_id: "course-3", completed: true, duration: "50m", order: 3 },
+      { id: "l3-4", title: "4. Analytics Dashboard Aggregations", course_id: "course-3", completed: false, duration: "40m", order: 4 },
+    ]
   },
   {
     id: "course-4",
@@ -75,7 +94,12 @@ export const MOCK_COURSES: Course[] = [
     duration: "10h 30m",
     level: "Intermediate",
     rating: 4.7,
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    lessons: [
+      { id: "l4-1", title: "1. Docker Containerization Essentials", course_id: "course-4", completed: true, duration: "25m", order: 1 },
+      { id: "l4-2", title: "2. Kubernetes Pods, Services & Ingress", course_id: "course-4", completed: false, duration: "40m", order: 2 },
+      { id: "l4-3", title: "3. Automated CI/CD Pipelines with GitHub Actions", course_id: "course-4", completed: false, duration: "35m", order: 3 },
+    ]
   },
   {
     id: "course-5",
@@ -94,7 +118,12 @@ export const MOCK_COURSES: Course[] = [
     duration: "7h 15m",
     level: "Beginner",
     rating: 4.85,
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    lessons: [
+      { id: "l5-1", title: "1. React Native CLI vs Expo Setup", course_id: "course-5", completed: true, duration: "20m", order: 1 },
+      { id: "l5-2", title: "2. Reanimated 3 Physics Animations", course_id: "course-5", completed: true, duration: "35m", order: 2 },
+      { id: "l5-3", title: "3. Offline Storage & Push Notifications", course_id: "course-5", completed: false, duration: "40m", order: 3 },
+    ]
   },
   {
     id: "course-6",
@@ -113,7 +142,153 @@ export const MOCK_COURSES: Course[] = [
     duration: "18h 00m",
     level: "Advanced",
     rating: 5.0,
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    lessons: [
+      { id: "l6-1", title: "1. LLM API Integration & Prompt Engineering", course_id: "course-6", completed: true, duration: "30m", order: 1 },
+      { id: "l6-2", title: "2. Vector Embeddings & RAG Search", course_id: "course-6", completed: false, duration: "45m", order: 2 },
+      { id: "l6-3", title: "3. Building Autonomous AI Agents", course_id: "course-6", completed: false, duration: "50m", order: 3 },
+    ]
+  },
+  {
+    id: "course-7",
+    title: "Ethical Hacking & Cybersecurity Defense",
+    description: "Learn penetration testing, OWASP Top 10 vulnerabilities, and security auditing.",
+    progress: 50,
+    icon_name: "code",
+    category: "Development",
+    instructor: {
+      name: "Alexey Volkov",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120",
+      role: "Cybersecurity Lead"
+    },
+    total_lessons: 26,
+    completed_lessons: 13,
+    duration: "11h 20m",
+    level: "Intermediate",
+    rating: 4.88,
+    created_at: new Date().toISOString(),
+    lessons: [
+      { id: "l7-1", title: "1. Network Reconnaissance & Port Scanning", course_id: "course-7", completed: true, duration: "30m", order: 1 },
+      { id: "l7-2", title: "2. Web Application Vulnerabilities & XSS", course_id: "course-7", completed: true, duration: "40m", order: 2 },
+      { id: "l7-3", title: "3. SQL Injection & Authentication Bypasses", course_id: "course-7", completed: false, duration: "45m", order: 3 },
+    ]
+  },
+  {
+    id: "course-8",
+    title: "Machine Learning with Python & PyTorch",
+    description: "Build neural networks, image classifiers, and natural language models from scratch.",
+    progress: 85,
+    icon_name: "data",
+    category: "AI & ML",
+    instructor: {
+      name: "Dr. Maya Patel",
+      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=120",
+      role: "ML Researcher"
+    },
+    total_lessons: 35,
+    completed_lessons: 30,
+    duration: "16h 40m",
+    level: "Advanced",
+    rating: 4.96,
+    created_at: new Date().toISOString(),
+    lessons: [
+      { id: "l8-1", title: "1. Tensors & Automatic Differentiation", course_id: "course-8", completed: true, duration: "35m", order: 1 },
+      { id: "l8-2", title: "2. Convolutional Neural Networks (CNNs)", course_id: "course-8", completed: true, duration: "50m", order: 2 },
+      { id: "l8-3", title: "3. Transformer Attention Mechanisms", course_id: "course-8", completed: true, duration: "55m", order: 3 },
+    ]
+  },
+  {
+    id: "course-9",
+    title: "Distributed Systems & System Design",
+    description: "Design high-availability architectures, load balancing, caching, and sharding strategies.",
+    progress: 40,
+    icon_name: "cloud",
+    category: "DevOps",
+    instructor: {
+      name: "Marcus Thorne",
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=120",
+      role: "VP of Engineering"
+    },
+    total_lessons: 22,
+    completed_lessons: 9,
+    duration: "9h 50m",
+    level: "Advanced",
+    rating: 4.92,
+    created_at: new Date().toISOString(),
+    lessons: [
+      { id: "l9-1", title: "1. CAP Theorem & Consistency Models", course_id: "course-9", completed: true, duration: "30m", order: 1 },
+      { id: "l9-2", title: "2. Redis Caching & Cache Invalidation", course_id: "course-9", completed: false, duration: "40m", order: 2 },
+      { id: "l9-3", title: "3. Database Partitioning & Sharding", course_id: "course-9", completed: false, duration: "45m", order: 3 },
+    ]
+  },
+  {
+    id: "course-10",
+    title: "Web3 & Smart Contract Engineering",
+    description: "Develop decentralized applications, Solidity smart contracts, and Web3 frontend integrations.",
+    progress: 25,
+    icon_name: "code",
+    category: "Development",
+    instructor: {
+      name: "Satoshi Miller",
+      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=120",
+      role: "Blockchain Developer"
+    },
+    total_lessons: 25,
+    completed_lessons: 6,
+    duration: "10h 15m",
+    level: "Intermediate",
+    rating: 4.75,
+    created_at: new Date().toISOString(),
+    lessons: [
+      { id: "l10-1", title: "1. EVM Architecture & Solidity Basics", course_id: "course-10", completed: true, duration: "25m", order: 1 },
+      { id: "l10-2", title: "2. ERC-20 & ERC-721 Token Standards", course_id: "course-10", completed: false, duration: "35m", order: 2 },
+    ]
+  },
+  {
+    id: "course-11",
+    title: "PostgreSQL Performance & Query Tuning",
+    description: "Master EXPLAIN ANALYZE, query execution plans, connection pooling, and table partitioning.",
+    progress: 70,
+    icon_name: "data",
+    category: "Data Science",
+    instructor: {
+      name: "Elena Rostova",
+      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=120",
+      role: "Senior Data Engineer"
+    },
+    total_lessons: 16,
+    completed_lessons: 11,
+    duration: "6h 40m",
+    level: "Advanced",
+    rating: 4.94,
+    created_at: new Date().toISOString(),
+    lessons: [
+      { id: "l11-1", title: "1. Reading EXPLAIN ANALYZE Query Plans", course_id: "course-11", completed: true, duration: "30m", order: 1 },
+      { id: "l11-2", title: "2. PgBouncer Connection Pooling", course_id: "course-11", completed: true, duration: "25m", order: 2 },
+    ]
+  },
+  {
+    id: "course-12",
+    title: "Product Management for Tech Leaders",
+    description: "Formulate product strategy, run user discovery sprints, and define technical roadmaps.",
+    progress: 100,
+    icon_name: "design",
+    category: "Design",
+    instructor: {
+      name: "Marcello Vance",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120",
+      role: "Lead UI Designer"
+    },
+    total_lessons: 15,
+    completed_lessons: 15,
+    duration: "5h 30m",
+    level: "Beginner",
+    rating: 4.9,
+    created_at: new Date().toISOString(),
+    lessons: [
+      { id: "l12-1", title: "1. User Story Mapping & Prioritization", course_id: "course-12", completed: true, duration: "20m", order: 1 },
+      { id: "l12-2", title: "2. Measuring Key Product Metrics (North Star)", course_id: "course-12", completed: true, duration: "30m", order: 2 },
+    ]
   }
 ]
 

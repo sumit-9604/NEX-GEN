@@ -3,11 +3,13 @@
 import { useState, useMemo } from 'react'
 import { CoursePageHeader } from './CoursePageHeader'
 import { CourseCard } from './CourseCard'
+import { CourseDetailModal } from './CourseDetailModal'
 import type { Course } from '@/types'
 
 export function CourseViewContainer({ initialCourses }: { initialCourses: Course[] }) {
   const [activeCategory, setActiveCategory] = useState('All')
   const [searchQuery, setSearchQuery] = useState('')
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null)
 
   const filteredCourses = useMemo(() => {
     return initialCourses.filter((course) => {
@@ -49,10 +51,21 @@ export function CourseViewContainer({ initialCourses }: { initialCourses: Course
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredCourses.map((course, index) => (
-            <CourseCard key={course.id} course={course} index={index} />
+            <CourseCard
+              key={course.id}
+              course={course}
+              index={index}
+              onClick={() => setSelectedCourse(course)}
+            />
           ))}
         </div>
       )}
+
+      {/* Interactive Modal */}
+      <CourseDetailModal
+        course={selectedCourse}
+        onClose={() => setSelectedCourse(null)}
+      />
     </>
   )
 }
