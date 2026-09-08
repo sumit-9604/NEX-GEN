@@ -34,8 +34,8 @@ export function CourseViewContainer({ initialCourses }: { initialCourses: Course
       />
 
       {filteredCourses.length === 0 ? (
-        <div className="text-center py-16 glass rounded-2xl border border-white/10">
-          <p className="text-gray-400 font-medium text-base">
+        <div className="text-center py-16 bg-white rounded-xl border border-[#E5E2D9]">
+          <p className="text-[#5C6058] font-medium text-base">
             No courses found matching "{searchQuery || activeCategory}".
           </p>
           <button
@@ -43,7 +43,7 @@ export function CourseViewContainer({ initialCourses }: { initialCourses: Course
               setActiveCategory('All')
               setSearchQuery('')
             }}
-            className="mt-4 px-4 py-2 rounded-xl bg-violet-500/20 text-violet-300 border border-violet-500/30 text-xs font-semibold hover:bg-violet-500/30 transition-colors"
+            className="mt-4 px-4 py-2 rounded-lg bg-[#EBF0EC] text-[#1B3B2B] border border-[#D9E3DC] text-xs font-bold hover:bg-[#D9E3DC] transition-colors"
           >
             Reset Filters
           </button>

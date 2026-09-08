@@ -25,9 +25,9 @@ export function HeroTile({ name, streak }: { name: string; streak: number }) {
   }, []);
 
   const spotlight = useMotionTemplate`radial-gradient(
-    380px circle at ${mouseX}px ${mouseY}px,
-    rgba(59,130,246,0.15),
-    transparent 65%
+    400px circle at ${mouseX}px ${mouseY}px,
+    rgba(27,59,43,0.04),
+    transparent 70%
   )`;
 
   const handleMouseMove = useCallback(
@@ -50,10 +50,10 @@ export function HeroTile({ name, streak }: { name: string; streak: number }) {
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.08, ...spring }}
-      className="relative overflow-hidden rounded-2xl glass p-6 md:p-8 min-h-[220px]"
+      className="relative overflow-hidden rounded-xl bg-white border border-[#E5E2D9] p-6 md:p-8 min-h-[220px]"
     >
       <motion.div
         className="absolute inset-0 pointer-events-none z-0"
@@ -62,17 +62,18 @@ export function HeroTile({ name, streak }: { name: string; streak: number }) {
 
       <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div className="flex-1 min-w-0">
+          {/* Eyebrow Tag */}
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.12, ...spring }}
             className="flex items-center gap-2 mb-3"
           >
-            <span className="p-1 rounded-md bg-blue-500/20 text-blue-400">
+            <span className="p-1 rounded bg-[#EBF0EC] text-[#1B3B2B]">
               <BookOpen className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[11px] font-bold text-sky-300 tracking-wider uppercase">
-              Dashboard Overview
+            <span className="text-[11px] font-mono font-semibold text-[#1B3B2B] tracking-wider uppercase">
+              Academic Dashboard
             </span>
           </motion.div>
 
@@ -80,38 +81,31 @@ export function HeroTile({ name, streak }: { name: string; streak: number }) {
             {isMounted && (
               <div className="scale-75 sm:scale-100 origin-left flex-shrink-0">
                 <CircularText
-                  text="NEXLEARN • EXPLORE • "
+                  text="NEXLEARN • ACADEMIC • "
                   radius={radius}
-                  spinDuration={22}
+                  spinDuration={24}
                   onHover="speedUp"
-                  className="text-sky-300 font-semibold"
+                  className="text-[#1B3B2B] font-semibold text-xs"
                 />
               </div>
             )}
             <div>
               <motion.h1
-                initial={{ opacity: 0, y: 14 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.18, ...spring }}
-                className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight mb-2"
-                style={{
-                  background:
-                    "linear-gradient(135deg, #ffffff 30%, rgba(96,165,250,0.9) 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
+                className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#1C1D1B] leading-tight mb-2"
               >
                 Welcome back, {name} 👋
               </motion.h1>
 
               <motion.p
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.24, ...spring }}
-                className="text-white/60 text-sm sm:text-base max-w-md"
+                className="text-[#5C6058] text-sm sm:text-base max-w-md leading-relaxed"
               >
-                You've completed 78% of your weekly learning target. Keep up the momentum!
+                You've completed 78% of your weekly academic target. Keep up the momentum!
               </motion.p>
             </div>
           </div>
@@ -122,46 +116,47 @@ export function HeroTile({ name, streak }: { name: string; streak: number }) {
             transition={{ delay: 0.32, ...spring }}
             className="flex flex-wrap items-center gap-3 mt-5"
           >
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/25">
-              <TrendingUp className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
-              <span className="text-xs font-semibold text-amber-300">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#FDF6F3] border border-[#FBEBE5] text-[#C85A32]">
+              <TrendingUp className="w-3.5 h-3.5 flex-shrink-0" />
+              <span className="text-xs font-semibold">
                 Top 15% this week
               </span>
-              <Sparkles className="w-3 h-3 text-amber-400 animate-pulse flex-shrink-0" />
+              <Sparkles className="w-3 h-3 flex-shrink-0" />
             </div>
 
-            <span className="w-1.5 h-1.5 rounded-full bg-white/20" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#E5E2D9]" />
 
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20">
-              <Award className="w-3.5 h-3.5 text-blue-400 flex-shrink-0" />
-              <span className="text-xs font-semibold text-sky-300">
-                ⚡ 24,850 XP Earned
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#EBF0EC] border border-[#D9E3DC] text-[#1B3B2B]">
+              <Award className="w-3.5 h-3.5 flex-shrink-0" />
+              <span className="text-xs font-semibold">
+                24,850 XP Earned
               </span>
             </div>
           </motion.div>
         </div>
 
+        {/* Streak Counter Tile */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8, y: 12 }}
+          initial={{ opacity: 0, scale: 0.95, y: 8 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ delay: 0.26, ...spring }}
-          whileHover={{ scale: 1.04 }}
-          className="flex-shrink-0 flex flex-col items-center justify-center p-5 rounded-2xl glass border border-orange-500/30 bg-gradient-to-b from-orange-500/10 to-transparent min-w-[140px]"
+          whileHover={{ scale: 1.02 }}
+          className="flex-shrink-0 flex flex-col items-center justify-center p-5 rounded-xl bg-[#FDF6F3] border border-[#FBEBE5] min-w-[140px]"
         >
           <motion.div
-            animate={{ y: [0, -4, 0], scale: [1, 1.1, 1] }}
+            animate={{ y: [0, -3, 0] }}
             transition={{
-              duration: 2,
+              duration: 2.5,
               repeat: Infinity,
               ease: "easeInOut",
             }}
           >
-            <Flame className="w-8 h-8 text-orange-400 drop-shadow-[0_0_12px_rgba(251,146,60,0.6)]" />
+            <Flame className="w-8 h-8 text-[#C85A32]" />
           </motion.div>
-          <span className="text-3xl font-black text-orange-400 leading-none tabular-nums mt-2">
+          <span className="font-serif text-3xl font-bold text-[#C85A32] leading-none tabular-nums mt-2">
             {streak}
           </span>
-          <span className="text-xs font-bold text-orange-300/80 uppercase tracking-widest mt-1">
+          <span className="text-[11px] font-mono font-bold text-[#C85A32]/80 uppercase tracking-wider mt-1">
             Day Streak
           </span>
         </motion.div>

@@ -26,22 +26,22 @@ export function ActivityGraph({ data = defaultData }: { data?: ActivityData[] })
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3, ...spring }}
-      className="rounded-2xl glass p-6 border border-white/10"
+      className="rounded-xl bg-white p-6 border border-[#E5E2D9]"
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h3 className="text-base font-bold text-white flex items-center gap-2">
+          <h3 className="font-serif text-lg font-bold text-[#1C1D1B]">
             Weekly Activity Analysis
           </h3>
-          <p className="text-xs text-white/50 mt-0.5">Study minutes logged per day</p>
+          <p className="text-xs text-[#5C6058] mt-0.5">Study minutes logged per day</p>
         </div>
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-xs font-semibold text-sky-300">Live Sync</span>
+        <div className="flex items-center gap-2 px-3 py-1 rounded-md bg-[#EBF0EC] border border-[#D9E3DC]">
+          <span className="w-2 h-2 rounded-full bg-[#1B3B2B] animate-pulse" />
+          <span className="text-xs font-mono font-semibold text-[#1B3B2B]">Live Sync</span>
         </div>
       </div>
 
@@ -54,7 +54,7 @@ export function ActivityGraph({ data = defaultData }: { data?: ActivityData[] })
         {[0.25, 0.5, 0.75, 1].map(frac => (
           <div
             key={frac}
-            className="absolute left-0 right-0 border-t border-white/[0.05]"
+            className="absolute left-0 right-0 border-t border-[#E5E2D9]"
             style={{ bottom: `${frac * CHART_HEIGHT + 28}px` }}
           />
         ))}
@@ -74,12 +74,12 @@ export function ActivityGraph({ data = defaultData }: { data?: ActivityData[] })
               {/* Tooltip on Hover */}
               {hoveredDay?.day === item.day && (
                 <motion.div
-                  initial={{ opacity: 0, y: 5, scale: 0.9 }}
-                  animate={{ opacity: 1, y: -8, scale: 1 }}
-                  className="absolute bottom-full mb-2 z-30 px-3 py-1.5 rounded-lg bg-slate-900/90 backdrop-blur-md border border-blue-500/30 text-center whitespace-nowrap shadow-xl"
+                  initial={{ opacity: 0, y: 4, scale: 0.95 }}
+                  animate={{ opacity: 1, y: -6, scale: 1 }}
+                  className="absolute bottom-full mb-2 z-30 px-3 py-1.5 rounded-md bg-[#1C1D1B] text-white text-center whitespace-nowrap shadow-md"
                 >
                   <p className="text-[11px] font-bold text-white">{item.value} min</p>
-                  <p className="text-[9px] text-sky-300 font-medium">
+                  <p className="text-[10px] text-[#D9E3DC] font-mono">
                     {item.sessionsCount || Math.ceil(item.value / 20)} sessions
                   </p>
                 </motion.div>
@@ -92,26 +92,20 @@ export function ActivityGraph({ data = defaultData }: { data?: ActivityData[] })
                   maxWidth: '36px',
                   height: barH,
                   originY: 1,
-                  borderRadius: '6px 6px 3px 3px',
-                  background: isPeak
-                    ? 'linear-gradient(to top, rgba(59,130,246,1), rgba(6,182,212,0.9))'
-                    : 'linear-gradient(to top, rgba(37,99,235,0.6), rgba(59,130,246,0.4))',
-                  boxShadow: isPeak
-                    ? '0 -4px 16px rgba(59,130,246,0.6)'
-                    : '0 -2px 8px rgba(59,130,246,0.2)',
+                  borderRadius: '4px 4px 2px 2px',
+                  backgroundColor: isPeak ? '#C85A32' : '#1B3B2B',
                 }}
                 initial={{ scaleY: 0, opacity: 0 }}
                 animate={{ scaleY: 1, opacity: 1 }}
-                transition={{ ...spring, delay: i * 0.07 }}
+                transition={{ ...spring, delay: i * 0.06 }}
                 whileHover={{
                   scaleY: 1.05,
-                  background: 'linear-gradient(to top, rgba(59,130,246,1), rgba(56,189,248,0.95))',
-                  boxShadow: '0 -6px 20px rgba(59,130,246,0.7)',
+                  backgroundColor: isPeak ? '#DB6337' : '#2D5A42',
                 }}
               />
 
               {/* Day label */}
-              <span className={`text-[11px] font-semibold mt-2 transition-colors ${isPeak ? 'text-sky-300 font-bold' : 'text-white/40 group-hover:text-white'}`}>
+              <span className={`text-[11px] font-mono font-semibold mt-2 transition-colors ${isPeak ? 'text-[#C85A32] font-bold' : 'text-[#5C6058] group-hover:text-[#1C1D1B]'}`}>
                 {item.day}
               </span>
             </div>
@@ -120,19 +114,19 @@ export function ActivityGraph({ data = defaultData }: { data?: ActivityData[] })
       </div>
 
       {/* Bottom Summary Strip */}
-      <div className="flex flex-wrap justify-between items-center mt-6 pt-4 border-t border-white/[0.08] gap-3">
-        <span className="text-xs text-white/50">
-          Peak Activity: <span className="text-sky-300 font-bold">{peakDayItem.day} ({peakDayItem.value}m)</span>
+      <div className="flex flex-wrap justify-between items-center mt-6 pt-4 border-t border-[#E5E2D9] gap-3">
+        <span className="text-xs text-[#5C6058]">
+          Peak Activity: <span className="text-[#C85A32] font-bold">{peakDayItem.day} ({peakDayItem.value}m)</span>
         </span>
-        <span className="text-xs text-white/50">
+        <span className="text-xs text-[#5C6058]">
           Daily Avg:{' '}
-          <span className="text-white/80 font-bold">
+          <span className="text-[#1C1D1B] font-bold">
             {avgMinutes} min
           </span>
         </span>
-        <span className="text-xs text-white/50">
+        <span className="text-xs text-[#5C6058]">
           Total Duration:{' '}
-          <span className="text-emerald-400 font-bold">
+          <span className="text-[#1B3B2B] font-bold">
             {Math.floor(totalMinutes / 60)}h {totalMinutes % 60}m
           </span>
         </span>

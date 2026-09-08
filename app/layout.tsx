@@ -3,8 +3,8 @@ import './globals.css'
 import { Geist } from 'next/font/google'
 import { cn } from '@/lib/utils'
 import { MotionProvider } from '@/src/ui/MotionProvider'
-import { AnimatedGrid }   from '@/src/ui/AnimatedGrid'
-import { NoiseTexture }   from '@/src/ui/NoiseTexture'
+import { AnimatedGrid } from '@/src/ui/AnimatedGrid'
+import { NoiseTexture } from '@/src/ui/NoiseTexture'
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' })
 

@@ -1,8 +1,10 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ActivityGraph } from 'src/components/ActivityGraph'
-import { StatsTiles } from 'src/components/StatsTiles'
+import { Sidebar } from '@/src/components/Sidebar'
+import { MobileNav } from '@/src/components/MobileNav'
+import { ActivityGraph } from '@/src/components/ActivityGraph'
+import { StatsTiles } from '@/src/components/StatsTiles'
 
 const spring = {
   type: 'spring',
@@ -12,28 +14,36 @@ const spring = {
 
 export default function AnalyticsPage() {
   return (
-    <main className="min-h-screen p-6 md:p-10">
+    <div className="flex h-screen overflow-hidden bg-[#F7F5F0]">
+      <Sidebar />
 
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={spring}
-        className="mb-8"
-      >
-        <h1 className="text-4xl font-black text-white tracking-tight">
-          Analytics
-        </h1>
+      <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
+        <MobileNav />
 
-        <p className="text-white/40 mt-2">
-          Track your performance and productivity.
-        </p>
-      </motion.div>
+        <main className="flex-1 overflow-y-auto p-4 md:p-8 pb-24 md:pb-8">
+          <div className="max-w-7xl mx-auto space-y-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={spring}
+              className="mb-6"
+            >
+              <h1 className="font-serif text-3xl md:text-4xl font-bold text-[#1C1D1B] tracking-tight">
+                Academic Performance & Analytics
+              </h1>
 
-      <div className="grid grid-cols-1 xl:grid-cols-[1.5fr_0.8fr] gap-6">
-        <ActivityGraph />
-        <StatsTiles />
+              <p className="text-[#5C6058] text-sm mt-1">
+                Comprehensive study metrics, focus time distribution, and achievement milestones.
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 xl:grid-cols-[1.5fr_0.8fr] gap-6">
+              <ActivityGraph />
+              <StatsTiles />
+            </div>
+          </div>
+        </main>
       </div>
-
-    </main>
+    </div>
   )
 }
