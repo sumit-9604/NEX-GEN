@@ -1,7 +1,8 @@
 'use client'
+
 import '@/app/globals.css'
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   LayoutDashboard, BookOpen, BarChart3, Settings,
@@ -10,81 +11,40 @@ import {
 import { cn } from '@/src/utils/cn'
 
 const navItems = [
-  {
-    icon: LayoutDashboard,
-    label: 'Dashboard',
-    id: 'dashboard',
-    href: '/',
-  },
-  {
-    icon: BookOpen,
-    label: 'Courses',
-    id: 'courses',
-    href: '/courses',
-  },
-  {
-    icon: BarChart3,
-    label: 'Analytics',
-    id: 'analytics',
-    href: '/analytics',
-  },
-  {
-    icon: Calendar,
-    label: 'Schedule',
-    id: 'schedule',
-    href: '/schedule',
-  },
-  {
-    icon: MessageSquare,
-    label: 'Messages',
-    id: 'messages',
-    href: '/messages',
-  },
-  {
-    icon: HelpCircle,
-    label: 'Help',
-    id: 'help',
-    href: '/help',
-  },
-  {
-    icon: Settings,
-    label: 'Settings',
-    id: 'settings',
-    href: '/settings',
-  },
+  { icon: LayoutDashboard, label: 'Dashboard', id: 'dashboard', href: '/' },
+  { icon: BookOpen, label: 'Courses', id: 'courses', href: '/courses' },
+  { icon: BarChart3, label: 'Analytics', id: 'analytics', href: '/analytics' },
+  { icon: Calendar, label: 'Schedule', id: 'schedule', href: '/schedule' },
+  { icon: MessageSquare, label: 'Messages', id: 'messages', href: '/messages' },
+  { icon: HelpCircle, label: 'Help', id: 'help', href: '/help' },
+  { icon: Settings, label: 'Settings', id: 'settings', href: '/settings' },
 ]
 
 const spring = { type: 'spring', stiffness: 280, damping: 26 } as const
 
 export function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false)
-  const [activeItem,  setActiveItem]  = useState('dashboard')
   const router = useRouter()
+  const pathname = usePathname()
+
   return (
-    
     <motion.aside
       initial={false}
-      animate={{display:"flex" , gap : "5px"}}
+      animate={{ width: isCollapsed ? 76 : 240 }}
       transition={spring}
       className={cn(
         'relative h-screen flex-shrink-0 overflow-hidden',
         'hidden md:flex flex-col',
-        'bg-white/[0.03] backdrop-blur-xl',
-        'border-r border-white/[0.06]',
+        'bg-slate-950/70 backdrop-blur-xl',
+        'border-r border-white/[0.08]',
         'z-40',
       )}
     >
-      <div className="flex items-center gap-3 h-16 px-4 border-b border-white/[0.06] flex-shrink-0" 
-      >
-
-        <div className="flex-shrink-0 w-8 h-8 rounded-lg
-                        bg-gradient-to-br from-violet-500 to-indigo-600
-                        flex items-center justify-center
-                        shadow-lg shadow-violet-500/20" 
-                        >
-          <GraduationCap className="w-4 h-4 text-white" />
+      {/* Brand Header */}
+      <div className="flex items-center gap-3 h-16 px-4 border-b border-white/[0.08] flex-shrink-0">
+        <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center shadow-lg shadow-blue-500/25">
+          <GraduationCap className="w-5 h-5 text-white" />
         </div>
-
 
         <AnimatePresence initial={false}>
           {!isCollapsed && (
@@ -94,75 +54,57 @@ export function Sidebar() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -10 }}
               transition={{ duration: 0.15 }}
-              className="flex-1 font-semibold text-[15px] tracking-tight
-                         text-gradient-violet whitespace-nowrap"
+              className="flex-1 font-bold text-base tracking-tight text-gradient-blue whitespace-nowrap"
             >
               NexLearn
             </motion.span>
           )}
         </AnimatePresence>
 
-
         <motion.button
-          animate={{ marginLeft: isCollapsed ? 'auto' : 0, rotate: isCollapsed ? 180 : 0 }}
+          animate={{ rotate: isCollapsed ? 180 : 0 }}
           transition={spring}
           onClick={() => setIsCollapsed(v => !v)}
-          
-          className="flex-shrink-0 flex items-center justify-center
-                     w-7 h-7 rounded-md
-                     text-white/30 hover:text-white/80 hover:bg-white/10
-                     transition-"
+          className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-lg text-white/40 hover:text-white hover:bg-white/10 transition-colors ml-auto"
         >
-          <ChevronLeft className="w-[15px] h-[15px]" />
+          <ChevronLeft className="w-4 h-4" />
         </motion.button>
       </div>
 
-      <div className='sideicons flex-1 mb-4' 
-      >
-      <nav>
+      {/* Navigation List */}
+      <div className="flex-1 overflow-y-auto py-4 px-3 space-y-1.5">
         {navItems.map((item) => {
-          const Icon     = item.icon
-          const isActive = activeItem === item.id
+          const Icon = item.icon
+          const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href))
 
           return (
             <motion.button
               key={item.id}
-              onClick={() => {
-  setActiveItem(item.id)
-  router.push(item.href)
-}}
-              whileHover={{ scale: 1.115 }}
-              whileTap={{ scale: 0.97 }}
-              transition={spring}
+              onClick={() => router.push(item.href)}
+              whileHover={{ x: isCollapsed ? 0 : 3 }}
+              whileTap={{ scale: 0.98 }}
               className={cn(
-                'relative flex items-center w-full h-10 rounded-lg',
-
-                isCollapsed ? 'justify-center px-0' : 'px-3 gap-3',
-
+                'relative flex items-center w-full h-11 rounded-xl transition-all duration-150',
+                isCollapsed ? 'justify-center px-0' : 'px-3.5 gap-3.5',
                 isActive
-                  ? 'bg-violet-500/10 text-white'
-                  : 'text-white/40 hover:bg-white/[0.04] hover:text-white/60',
-                'transition-colors duration-150',
+                  ? 'bg-blue-500/15 text-white font-semibold border border-blue-500/30 shadow-lg shadow-blue-500/10'
+                  : 'text-white/50 hover:bg-white/[0.05] hover:text-white/90 border border-transparent',
               )}
             >
-
               {isActive && (
                 <motion.span
-                  layoutId="sidebar-pill"
+                  layoutId="sidebar-active-pill"
                   transition={spring}
-                  className="absolute left-0 top-1/2 -translate-y-1/2
-                             w-[3px] h-[22px] rounded-r-full
-                             bg-gradient-to-b from-violet-400 to-indigo-500"
+                  className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 rounded-r-full bg-gradient-to-b from-sky-400 to-blue-600 shadow-md shadow-blue-500/50"
                 />
               )}
 
-
               <span className="flex-shrink-0 flex items-center justify-center w-5 h-5">
                 <Icon
-                  strokeWidth={isActive ? 2 : 1.75}
+                  strokeWidth={isActive ? 2.2 : 1.8}
                   className={cn(
-                    'w-[18px] h-[18px] transition-colors duration-150',
-                    isActive ? 'text-violet-400' : 'inherit',
+                    'w-5 h-5 transition-colors',
+                    isActive ? 'text-blue-400' : 'text-white/50 group-hover:text-white',
                   )}
                 />
               </span>
@@ -175,7 +117,7 @@ export function Sidebar() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -8 }}
                     transition={{ duration: 0.13 }}
-                    className="text-[13px] font-medium whitespace-nowrap"
+                    className="text-sm font-medium whitespace-nowrap"
                   >
                     {item.label}
                   </motion.span>
@@ -184,28 +126,21 @@ export function Sidebar() {
             </motion.button>
           )
         })}
-      </nav>
       </div>
 
-
-      <div className="flex-shrink-0 p-2 border-t border-white/[0.06]">
-        <button className={cn(
-          'flex items-center w-full rounded-lg p-2',
-          'hover:bg-white/[0.04] transition-colors',
+      {/* User Footer */}
+      <div className="flex-shrink-0 p-3 border-t border-white/[0.08]">
+        <div className={cn(
+          'flex items-center w-full rounded-xl p-2 bg-white/[0.02] border border-white/[0.05]',
           isCollapsed ? 'justify-center' : 'gap-3',
         )}>
-
-
           <div className="relative flex-shrink-0">
-            <div className="w-8 h-8 rounded-full
-                            bg-gradient-to-br from-violet-500 to-indigo-600
-                            flex items-center justify-center
-                            text-[11px] font-bold text-white select-none">
-              A
-            </div>
-            <span className="absolute -bottom-px -right-px
-                             w-[10px] h-[10px] rounded-full
-                             bg-emerald-400 border-2 border-[#050816]" />
+            <img
+              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=120"
+              alt="Alex Morgan"
+              className="w-8 h-8 rounded-full object-cover border border-blue-500/40"
+            />
+            <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-[#070b14]" />
           </div>
 
           <AnimatePresence initial={false}>
@@ -218,16 +153,16 @@ export function Sidebar() {
                 transition={{ duration: 0.13 }}
                 className="flex-1 min-w-0 text-left"
               >
-                <p className="text-[13px] font-medium text-white/90 leading-tight truncate">
+                <p className="text-xs font-bold text-white leading-tight truncate">
                   Alex Morgan
                 </p>
-                <p className="text-[11px] text-white/35 leading-tight truncate mt-0.5">
-                  Student
+                <p className="text-[10px] text-sky-300 font-medium leading-tight truncate mt-0.5">
+                  Elite Scholar
                 </p>
               </motion.div>
             )}
           </AnimatePresence>
-        </button>
+        </div>
       </div>
     </motion.aside>
   )

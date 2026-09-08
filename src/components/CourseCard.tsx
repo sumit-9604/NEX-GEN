@@ -34,7 +34,7 @@ export function CourseCard({
   const levelColor = {
     Beginner: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
     Intermediate: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/20',
-    Advanced: 'text-violet-400 bg-violet-500/10 border-violet-500/20'
+    Advanced: 'text-blue-400 bg-blue-500/10 border-blue-500/20'
   }[course.level || 'Intermediate']
 
   return (
@@ -56,8 +56,8 @@ export function CourseCard({
       onMouseEnter={() => setIsHovered(true)}
       className="relative rounded-2xl p-6 cursor-pointer glass transition-all duration-300 flex flex-col justify-between"
       style={{
-        border: `1px solid ${isHovered ? 'rgba(139, 92, 246, 0.45)' : 'rgba(255, 255, 255, 0.08)'}`,
-        boxShadow: isHovered ? '0 12px 32px rgba(139, 92, 246, 0.25)' : 'none',
+        border: `1px solid ${isHovered ? 'rgba(59, 130, 246, 0.45)' : 'rgba(255, 255, 255, 0.08)'}`,
+        boxShadow: isHovered ? '0 12px 32px rgba(59, 130, 246, 0.25)' : 'none',
         rotateX,
         rotateY,
         transformStyle: 'preserve-3d'
@@ -70,7 +70,7 @@ export function CourseCard({
             <div className="flex items-center gap-3">
               <motion.div 
                 whileHover={{ rotate: 15, scale: 1.1 }}
-                className="p-3 rounded-xl bg-violet-500/15 border border-violet-500/20 text-violet-400"
+                className="p-3 rounded-xl bg-blue-500/15 border border-blue-500/20 text-blue-400"
               >
                 <Icon className="w-5 h-5" />
               </motion.div>
@@ -84,13 +84,13 @@ export function CourseCard({
               </div>
             </div>
 
-            <div className="text-sm font-bold px-3 py-1 rounded-full bg-white/5 border border-white/10 text-violet-300">
+            <div className="text-sm font-bold px-3 py-1 rounded-full bg-white/5 border border-white/10 text-sky-300">
               {course.progress}%
             </div>
           </div>
           
           {/* Title & Description */}
-          <h3 className="text-lg font-bold mb-2 text-white group-hover:text-violet-300 transition-colors line-clamp-1">
+          <h3 className="text-lg font-bold mb-2 text-white group-hover:text-blue-300 transition-colors line-clamp-1">
             {course.title}
           </h3>
 
@@ -115,8 +115,8 @@ export function CourseCard({
               transition={{ duration: 1, delay: index * 0.1, type: "spring" }}
               className="absolute inset-y-0 left-0 rounded-full"
               style={{
-                background: 'linear-gradient(90deg, #8B5CF6, #6366F1)',
-                boxShadow: '0 0 10px rgba(139, 92, 246, 0.6)'
+                background: 'linear-gradient(90deg, #3B82F6, #06B6D4)',
+                boxShadow: '0 0 10px rgba(59, 130, 246, 0.6)'
               }}
             />
           </div>
@@ -132,7 +132,7 @@ export function CourseCard({
                     className="w-6 h-6 rounded-full object-cover border border-white/20"
                   />
                 ) : (
-                  <div className="w-6 h-6 rounded-full bg-violet-500/20 text-violet-300 flex items-center justify-center text-[10px] font-bold">
+                  <div className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-300 flex items-center justify-center text-[10px] font-bold">
                     {course.instructor.name[0]}
                   </div>
                 )}
@@ -140,7 +140,7 @@ export function CourseCard({
                   {course.instructor.name}
                 </span>
               </div>
-              <span className="text-xs font-semibold text-violet-400 hover:underline">
+              <span className="text-xs font-semibold text-blue-400 hover:underline">
                 View Details →
               </span>
             </div>

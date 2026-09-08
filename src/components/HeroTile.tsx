@@ -26,7 +26,7 @@ export function HeroTile({ name, streak }: { name: string; streak: number }) {
 
   const spotlight = useMotionTemplate`radial-gradient(
     380px circle at ${mouseX}px ${mouseY}px,
-    rgba(139,92,246,0.15),
+    rgba(59,130,246,0.15),
     transparent 65%
   )`;
 
@@ -68,10 +68,10 @@ export function HeroTile({ name, streak }: { name: string; streak: number }) {
             transition={{ delay: 0.12, ...spring }}
             className="flex items-center gap-2 mb-3"
           >
-            <span className="p-1 rounded-md bg-violet-500/20 text-violet-400">
+            <span className="p-1 rounded-md bg-blue-500/20 text-blue-400">
               <BookOpen className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[11px] font-bold text-violet-300 tracking-wider uppercase">
+            <span className="text-[11px] font-bold text-sky-300 tracking-wider uppercase">
               Dashboard Overview
             </span>
           </motion.div>
@@ -84,7 +84,7 @@ export function HeroTile({ name, streak }: { name: string; streak: number }) {
                   radius={radius}
                   spinDuration={22}
                   onHover="speedUp"
-                  className="text-violet-300 font-semibold"
+                  className="text-sky-300 font-semibold"
                 />
               </div>
             )}
@@ -96,7 +96,7 @@ export function HeroTile({ name, streak }: { name: string; streak: number }) {
                 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight mb-2"
                 style={{
                   background:
-                    "linear-gradient(135deg, #ffffff 30%, rgba(192,132,252,0.9) 100%)",
+                    "linear-gradient(135deg, #ffffff 30%, rgba(96,165,250,0.9) 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -132,9 +132,9 @@ export function HeroTile({ name, streak }: { name: string; streak: number }) {
 
             <span className="w-1.5 h-1.5 rounded-full bg-white/20" />
 
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-violet-500/10 border border-violet-500/20">
-              <Award className="w-3.5 h-3.5 text-violet-400 flex-shrink-0" />
-              <span className="text-xs font-semibold text-violet-300">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20">
+              <Award className="w-3.5 h-3.5 text-blue-400 flex-shrink-0" />
+              <span className="text-xs font-semibold text-sky-300">
                 ⚡ 24,850 XP Earned
               </span>
             </div>

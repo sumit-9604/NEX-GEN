@@ -43,7 +43,7 @@ export function CourseDetailModal({
 
           {/* Banner Header */}
           <div className="flex items-center gap-3 mb-3">
-            <span className="text-xs font-bold px-3 py-1 rounded-full bg-violet-500/20 text-violet-300 border border-violet-500/30">
+            <span className="text-xs font-bold px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">
               {course.category}
             </span>
             <span className="text-xs font-bold px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
@@ -70,20 +70,20 @@ export function CourseDetailModal({
             <div>
               <span className="text-[10px] text-white/40 uppercase font-semibold block">Total Duration</span>
               <span className="text-sm font-bold text-white flex items-center gap-1.5 mt-0.5">
-                <Clock className="w-4 h-4 text-violet-400" />
+                <Clock className="w-4 h-4 text-blue-400" />
                 {course.duration}
               </span>
             </div>
             <div>
               <span className="text-[10px] text-white/40 uppercase font-semibold block">Lessons</span>
               <span className="text-sm font-bold text-white flex items-center gap-1.5 mt-0.5">
-                <BookOpen className="w-4 h-4 text-violet-400" />
+                <BookOpen className="w-4 h-4 text-blue-400" />
                 {lessons.length > 0 ? `${completedCount}/${lessons.length}` : `${course.completed_lessons}/${course.total_lessons}`}
               </span>
             </div>
             <div>
               <span className="text-[10px] text-white/40 uppercase font-semibold block">Progress</span>
-              <span className="text-sm font-bold text-violet-300 mt-0.5 block">
+              <span className="text-sm font-bold text-sky-300 mt-0.5 block">
                 {calculatedProgress}%
               </span>
             </div>
@@ -97,15 +97,15 @@ export function CourseDetailModal({
 
           {/* Instructor Profile */}
           {course.instructor && (
-            <div className="flex items-center gap-3.5 p-4 rounded-2xl bg-violet-500/10 border border-violet-500/20 mb-6">
+            <div className="flex items-center gap-3.5 p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20 mb-6">
               {course.instructor.avatar ? (
                 <img
                   src={course.instructor.avatar}
                   alt={course.instructor.name}
-                  className="w-12 h-12 rounded-full object-cover border-2 border-violet-500/40"
+                  className="w-12 h-12 rounded-full object-cover border-2 border-blue-500/40"
                 />
               ) : (
-                <div className="w-12 h-12 rounded-full bg-violet-500/20 text-violet-300 flex items-center justify-center font-bold">
+                <div className="w-12 h-12 rounded-full bg-blue-500/20 text-blue-300 flex items-center justify-center font-bold">
                   <User className="w-6 h-6" />
                 </div>
               )}
@@ -113,7 +113,7 @@ export function CourseDetailModal({
                 <h4 className="text-sm font-bold text-white">
                   Instructor: {course.instructor.name}
                 </h4>
-                <p className="text-xs text-violet-300">
+                <p className="text-xs text-sky-300">
                   {course.instructor.role}
                 </p>
               </div>
@@ -170,7 +170,7 @@ export function CourseDetailModal({
                 alert(`Starting lesson for ${course.title}!`)
                 onClose()
               }}
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-xs font-bold shadow-lg shadow-violet-500/25 transition-all"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-lg shadow-blue-500/25 transition-all"
             >
               <Play className="w-4 h-4 fill-white" />
               <span>Continue Learning</span>

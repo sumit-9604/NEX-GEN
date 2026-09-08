@@ -48,7 +48,7 @@ export function CoursePageHeader({
               value={searchQuery || ''}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder="Search courses..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-violet-500/50 transition-colors"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-blue-500/50 transition-colors"
             />
           </div>
         )}
@@ -57,7 +57,7 @@ export function CoursePageHeader({
       {/* Category Pills */}
       {onCategoryChange && (
         <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-          <Filter className="w-4 h-4 text-violet-400 flex-shrink-0 mr-1" />
+          <Filter className="w-4 h-4 text-blue-400 flex-shrink-0 mr-1" />
           {categories.map((category) => {
             const isActive = activeCategory === category
             return (
@@ -66,7 +66,7 @@ export function CoursePageHeader({
                 onClick={() => onCategoryChange(category)}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 border ${
                   isActive
-                    ? 'bg-violet-500/20 text-violet-300 border-violet-500/40 shadow-lg shadow-violet-500/10'
+                    ? 'bg-blue-500/20 text-blue-300 border-blue-500/40 shadow-lg shadow-blue-500/10'
                     : 'bg-white/5 text-white/60 border-white/5 hover:bg-white/10 hover:text-white'
                 }`}
               >

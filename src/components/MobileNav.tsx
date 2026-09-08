@@ -1,35 +1,36 @@
 'use client'
 
-import { useState } from 'react'
-import { LayoutDashboard, BookOpen, BarChart3, Settings } from 'lucide-react'
+import { useRouter, usePathname } from 'next/navigation'
+import { LayoutDashboard, BookOpen, BarChart3, Calendar, Settings } from 'lucide-react'
 import { cn } from '@/src/utils/cn'
 
 const mobileItems = [
-  { icon: LayoutDashboard, label: 'Home',     id: 'dashboard' },
-  { icon: BookOpen,        label: 'Courses',  id: 'courses'   },
-  { icon: BarChart3,       label: 'Stats',    id: 'analytics' },
-  { icon: Settings,        label: 'Settings', id: 'settings'  },
+  { icon: LayoutDashboard, label: 'Home', id: 'dashboard', href: '/' },
+  { icon: BookOpen, label: 'Courses', id: 'courses', href: '/courses' },
+  { icon: BarChart3, label: 'Stats', id: 'analytics', href: '/analytics' },
+  { icon: Calendar, label: 'Schedule', id: 'schedule', href: '/schedule' },
+  { icon: Settings, label: 'Settings', id: 'settings', href: '/settings' },
 ]
 
 export function MobileNav() {
-  const [active, setActive] = useState('dashboard')
+  const router = useRouter()
+  const pathname = usePathname()
 
   return (
-    <nav className="md:hidden flex items-center border-b border-white/[0.06]
-                    bg-[#050816]/80 backdrop-blur-xl px-2 h-14 flex-shrink-0">
-      {mobileItems.map(({ icon: Icon, label, id }) => {
-        const isActive = active === id
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around border-t border-white/10 bg-[#070b14]/90 backdrop-blur-xl px-2 h-16 shadow-2xl">
+      {mobileItems.map(({ icon: Icon, label, id, href }) => {
+        const isActive = pathname === href || (href !== '/' && pathname.startsWith(href))
         return (
           <button
             key={id}
-            onClick={() => setActive(id)}
+            onClick={() => router.push(href)}
             className={cn(
-              'flex-1 flex flex-col items-center justify-center gap-1 h-full',
-              'text-[10px] font-medium transition-colors',
-              isActive ? 'text-violet-400' : 'text-white/35 hover:text-white/60',
+              'flex-1 flex flex-col items-center justify-center gap-1 h-full py-1',
+              'text-[11px] font-medium transition-all duration-200',
+              isActive ? 'text-blue-400 font-bold scale-105' : 'text-white/40 hover:text-white/70',
             )}
           >
-            <Icon className="w-5 h-5" strokeWidth={isActive ? 2 : 1.75} />
+            <Icon className="w-5 h-5" strokeWidth={isActive ? 2.2 : 1.75} />
             <span>{label}</span>
           </button>
         )
